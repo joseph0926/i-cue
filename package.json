@@ -1,0 +1,56 @@
+{
+  "name": "doc-q",
+  "version": "1.0.0",
+  "description": "병원 대기 시간을 효율적으로 관리하여 환자에게 실시간 알림과 편리한 진료 환경을 제공하는 스마트 대기열 솔루션입니다.",
+  "private": "true",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "build:prod": "turbo run build:prod",
+    "start:prod": "turbo run start",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "turbo run format",
+    "db:gen:dev": "turbo run db:gen:dev",
+    "db:studio": "turbo run db:studio"
+  },
+  "keywords": [],
+  "author": "joseph0926",
+  "license": "ISC",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=21"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.10.6",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.3",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "postcss": "^8.5.1",
+    "prisma": "^6.2.1",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^3.4.17",
+    "turbo": "^2.3.3",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@prisma/client": "^6.2.1",
+    "bcryptjs": "^2.4.3",
+    "env-cmd": "^10.1.0",
+    "lucide-react": "^0.471.1",
+    "next-themes": "^0.4.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "zod": "^3.24.1"
+  }
+}

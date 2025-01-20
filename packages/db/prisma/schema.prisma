@@ -1,0 +1,169 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  PATIENT
+  STAFF
+}
+
+enum StaffRole {
+  ADMIN
+  RECEPTION
+  DOCTOR
+  NURSE
+}
+
+enum TicketStatus {
+  WAITING
+  CALLED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id String @id @default(cuid())
+
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  nickname      String?
+
+  passwordHash String?
+
+  role UserRole @default(PATIENT)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts                Account[]
+  sessions                Session[]
+  emailVerificationTokens EmailVerificationToken[]
+
+  staff        Staff?
+  queueTickets QueueTicket[]
+  pushTokens   PushToken[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Hospital {
+  id      String  @id @default(cuid())
+  name    String
+  address String?
+  phone   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  departments   Department[]
+  staffs        Staff[]
+  announcements Announcement[]
+}
+
+model Department {
+  id         String @id @default(cuid())
+  hospitalId String
+  name       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hospital     Hospital      @relation(fields: [hospitalId], references: [id])
+  queueTickets QueueTicket[]
+}
+
+model Staff {
+  id         String    @id @default(cuid())
+  userId     String    @unique
+  hospitalId String
+  role       StaffRole
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id])
+  hospital Hospital @relation(fields: [hospitalId], references: [id])
+}
+
+model QueueTicket {
+  id           String       @id @default(cuid())
+  userId       String
+  departmentId String
+  status       TicketStatus @default(WAITING)
+  priority     Boolean      @default(false)
+
+  ticketNumber Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  user       User       @relation(fields: [userId], references: [id])
+  department Department @relation(fields: [departmentId], references: [id])
+}
+
+model Announcement {
+  id         String  @id @default(cuid())
+  hospitalId String
+  title      String
+  content    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  hospital Hospital @relation(fields: [hospitalId], references: [id])
+}
+
+model PushToken {
+  id       String  @id @default(cuid())
+  userId   String
+  token    String
+  platform String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
