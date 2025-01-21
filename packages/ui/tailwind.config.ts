@@ -1,4 +1,4 @@
-import baseTailwindConfig from '@doc-q/config/tailwind/tailwind.config';
+import baseTailwindConfig from '@icue/config/tailwind/tailwind.config';
 import type { Config } from 'tailwindcss';
 
 export default {

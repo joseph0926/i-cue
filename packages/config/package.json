@@ -1,5 +1,5 @@
 {
-  "name": "@doc-q/config",
+  "name": "@icue/config",
   "version": "1.0.0",
   "description": "Shared configuration (ESLint, Prettier, Tailwind) for my monorepo",
   "type": "module",

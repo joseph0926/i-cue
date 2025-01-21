@@ -1,3 +1,3 @@
-import tsConfig from '@doc-q/config/eslint/eslint.config.ts.mjs';
+import tsConfig from '@icue/config/eslint/eslint.config.ts.mjs';
 
 export default [...tsConfig, {}];

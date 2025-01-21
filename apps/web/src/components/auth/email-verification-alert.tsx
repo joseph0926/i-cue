@@ -1,7 +1,7 @@
 'use client';
 
-import { Alert, AlertDescription, AlertTitle } from '@doc-q/ui/src/components/alert';
-import { Button } from '@doc-q/ui/src/components/button';
+import { Alert, AlertDescription, AlertTitle } from '@icue/ui/src/components/alert';
+import { Button } from '@icue/ui/src/components/button';
 import { MailboxIcon } from 'lucide-react';
 
 interface EmailVerificationAlertProps {

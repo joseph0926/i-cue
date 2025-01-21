@@ -1,8 +1,9 @@
 'use client';
 
-import { signUpSchema, type SignUpValues } from '@doc-q/db/src/schemas/auth.schema';
-import { Alert, AlertDescription } from '@doc-q/ui/src/components/alert';
-import { Button } from '@doc-q/ui/src/components/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signUpSchema, type SignUpValues } from '@icue/db/src/schemas/auth.schema';
+import { Alert, AlertDescription } from '@icue/ui/src/components/alert';
+import { Button } from '@icue/ui/src/components/button';
 import {
   Form,
   FormControl,
@@ -10,9 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@doc-q/ui/src/components/form';
-import { Input } from '@doc-q/ui/src/components/input';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from '@icue/ui/src/components/form';
+import { Input } from '@icue/ui/src/components/input';
 import { AlertTriangleIcon, EyeIcon, EyeOffIcon, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';

@@ -1,4 +1,4 @@
-import { cn } from '@doc-q/ui/lib/utils';
+import { cn } from '@icue/ui/lib/utils';
 import * as React from 'react';
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(

@@ -69,7 +69,7 @@ export function VerifyEmailCode({ code }: { code: string }) {
                                 color: '#ffffff',
                               }}
                             >
-                              DocQ
+                              ICue
                             </h1>
                           </td>
                         </tr>
@@ -88,7 +88,7 @@ export function VerifyEmailCode({ code }: { code: string }) {
                         color: '#1a202c',
                       }}
                     >
-                      닥큐 이메일 인증 안내
+                      아이큐 이메일 인증 안내
                     </h2>
                     <p
                       style={{
@@ -139,7 +139,7 @@ export function VerifyEmailCode({ code }: { code: string }) {
                       color: '#a0aec0',
                     }}
                   >
-                    © 2025 DocQ Inc. All rights reserved.
+                    © 2025 ICue Inc. All rights reserved.
                   </td>
                 </tr>
               </table>

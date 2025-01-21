@@ -24,7 +24,7 @@ export async function sendVerificationRequest({
     body: JSON.stringify({
       from: provider.from,
       to,
-      subject: '닥큐 이메일 인증 코드',
+      subject: '아이큐 이메일 인증 코드',
       html,
       text: `아래 코드를 입력하여 인증을 완료해주세요.\n\n[인증 코드] ${code}`,
     }),

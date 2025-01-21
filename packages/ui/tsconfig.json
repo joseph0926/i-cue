@@ -23,7 +23,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@doc-q/ui/*": ["./src/*"]
+      "@icue/ui/*": ["./src/*"]
     }
   },
   "include": ["src", "tailwind.config.ts"]

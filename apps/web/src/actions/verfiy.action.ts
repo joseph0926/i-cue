@@ -1,8 +1,8 @@
 'use server';
 
-import { prisma } from '@doc-q/db/src/prisma';
-import { generateVerificationCode } from '@doc-q/db/src/utils/token';
-import { ApiResponse } from '@doc-q/shared/src/types/common.type';
+import { prisma } from '@icue/db/src/prisma';
+import { generateVerificationCode } from '@icue/db/src/utils/token';
+import { ApiResponse } from '@icue/shared/src/types/common.type';
 import { sendVerificationRequest } from '@/lib/send-verify-email';
 
 export type ResendVerificationPayload = {

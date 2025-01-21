@@ -1,5 +1,5 @@
 {
-  "name": "doc-q",
+  "name": "icue",
   "version": "1.0.0",
   "description": "병원 대기 시간을 효율적으로 관리하여 환자에게 실시간 알림과 편리한 진료 환경을 제공하는 스마트 대기열 솔루션입니다.",
   "private": "true",

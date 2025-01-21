@@ -162,7 +162,7 @@ export default function SignUpPage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 py-8">
-      <h1 className="mb-2 text-2xl font-bold md:text-3xl">닥큐(DocQ) 회원가입</h1>
+      <h1 className="mb-2 text-2xl font-bold md:text-3xl">아이큐(ICue) 회원가입</h1>
       <p className="text-foreground/60 mb-6 mt-1">
         병원 대기 시간을 효율적으로 관리하여 환자에게 실시간 알림과 편리한 진료 환경을 제공하는
         스마트 대기열 솔루션입니다.

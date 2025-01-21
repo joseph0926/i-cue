@@ -1,7 +1,7 @@
 'use client';
 
-import { Label } from '@doc-q/ui/components/label';
-import { cn } from '@doc-q/ui/lib/utils';
+import { Label } from '@icue/ui/components/label';
+import { cn } from '@icue/ui/lib/utils';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';

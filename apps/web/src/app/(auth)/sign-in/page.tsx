@@ -1,8 +1,9 @@
 'use client';
 
-import { signInSchema, type SignInValues } from '@doc-q/db/src/schemas/auth.schema';
-import { Alert, AlertDescription } from '@doc-q/ui/src/components/alert';
-import { Button } from '@doc-q/ui/src/components/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInSchema, type SignInValues } from '@icue/db/src/schemas/auth.schema';
+import { Alert, AlertDescription } from '@icue/ui/src/components/alert';
+import { Button } from '@icue/ui/src/components/button';
 import {
   Form,
   FormControl,
@@ -10,9 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@doc-q/ui/src/components/form';
-import { Input } from '@doc-q/ui/src/components/input';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from '@icue/ui/src/components/form';
+import { Input } from '@icue/ui/src/components/input';
 import { AlertTriangleIcon, EyeIcon, EyeOffIcon, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { signIn as nextAuthSignIn } from 'next-auth/react';
@@ -60,7 +60,7 @@ export default function SignInPage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 py-8">
-      <h1 className="mb-2 text-2xl font-bold md:text-3xl">닥큐(DocQ) 로그인</h1>
+      <h1 className="mb-2 text-2xl font-bold md:text-3xl">아이큐(ICue) 로그인</h1>
       <p className="text-foreground/60 mb-6 mt-1">
         병원 대기 시간을 효율적으로 관리하여 환자에게 실시간 알림과 편리한 진료 환경을 제공하는
         스마트 대기열 솔루션입니다.

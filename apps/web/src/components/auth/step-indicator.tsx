@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@doc-q/ui/src/lib/utils';
+import { cn } from '@icue/ui/src/lib/utils';
 
 interface StepIndicatorProps {
   currentStep: number;

@@ -1,5 +1,5 @@
 {
-  "name": "@doc-q/ui",
+  "name": "@icue/ui",
   "version": "0.1.0",
   "main": "src/index.ts",
   "type": "module",
@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@doc-q/config": "workspace:*",
+    "@icue/config": "workspace:*",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",

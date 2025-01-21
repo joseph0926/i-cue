@@ -1,9 +1,9 @@
 'use server';
 
-import { prisma } from '@doc-q/db/src/prisma';
-import { ApiResponse } from '@doc-q/shared/src/types/common.type';
-import bcrypt from 'bcryptjs';
+import { prisma } from '@icue/db/src/prisma';
+import { ApiResponse } from '@icue/shared/src/types/common.type';
 import { User } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 export async function deleteUser(userId: string): Promise<ApiResponse<{ message: string }>> {
   try {

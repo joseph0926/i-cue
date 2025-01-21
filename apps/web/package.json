@@ -1,5 +1,5 @@
 {
-  "name": "@doc-q/web",
+  "name": "@icue/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
-    "@doc-q/config": "workspace:*",
-    "@doc-q/db": "workspace:*",
-    "@doc-q/shared": "workspace:*",
-    "@doc-q/ui": "workspace:*",
+    "@icue/config": "workspace:*",
+    "@icue/db": "workspace:*",
+    "@icue/shared": "workspace:*",
+    "@icue/ui": "workspace:*",
     "@react-email/components": "^0.0.32",
     "motion": "^11.18.0",
     "next": "15.1.4",

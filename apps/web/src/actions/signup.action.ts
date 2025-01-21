@@ -1,15 +1,15 @@
 'use server';
 
-import { prisma } from '@doc-q/db/src/prisma';
+import { prisma } from '@icue/db/src/prisma';
 import {
   profileSchema,
   type ProfileValues,
   signUpSchema,
   type SignUpValues,
-} from '@doc-q/db/src/schemas/auth.schema';
-import { saltAndHashPassword } from '@doc-q/db/src/utils/password';
-import { generateVerificationCode } from '@doc-q/db/src/utils/token';
-import { ApiResponse } from '@doc-q/shared/src/types/common.type';
+} from '@icue/db/src/schemas/auth.schema';
+import { saltAndHashPassword } from '@icue/db/src/utils/password';
+import { generateVerificationCode } from '@icue/db/src/utils/token';
+import { ApiResponse } from '@icue/shared/src/types/common.type';
 import { sendVerificationRequest } from '@/lib/send-verify-email';
 import { deleteUser } from './user.action';
 
