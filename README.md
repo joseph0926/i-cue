@@ -271,7 +271,7 @@ AUTH_RESEND_KEY=""
 
 ## 문의
 
-- **프로젝트 관련 문의**: [rkekqmf0926@gmail.com](mailto:rkekqmf0926@gmail.com)
+- **프로젝트 관련 문의**: [rkekqmf0926@gmail.com](mailto:icue.streaming@gmail.com)
 - **버그 제보 및 개선 제안**: [이슈 등록](https://github.com/joseph0926/i-cue/issues)
 
 <br />
