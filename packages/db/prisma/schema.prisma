@@ -7,49 +7,39 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum UserRole {
-  PATIENT
-  STAFF
-}
-
-enum StaffRole {
+enum Role {
+  VIEWER
+  STREAMER
   ADMIN
-  RECEPTION
-  DOCTOR
-  NURSE
 }
 
-enum TicketStatus {
-  WAITING
-  CALLED
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
+enum IdeaStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  ARCHIVED
 }
 
 model User {
-  id String @id @default(cuid())
-
-  name          String
-  email         String    @unique
-  emailVerified DateTime?
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
   image         String?
-  nickname      String?
 
-  passwordHash String?
+  role Role @default(VIEWER)
 
-  role UserRole @default(PATIENT)
+  accounts Account[]
+  sessions Session[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  proposedIdeas Idea[] @relation("ProposedIdeas")
 
-  accounts                Account[]
-  sessions                Session[]
-  emailVerificationTokens EmailVerificationToken[]
+  streamedIdeas Idea[] @relation("StreamerRelation")
 
-  staff        Staff?
-  queueTickets QueueTicket[]
-  pushTokens   PushToken[]
+  votes   IdeaVote[]
+  rewards Reward[]
+
+  @@map("users")
 }
 
 model Account {
@@ -58,112 +48,86 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?
+  id_token          String? @db.Text
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 }
 
-model EmailVerificationToken {
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Idea {
+  id          String     @id @default(cuid())
+  title       String
+  description String     @db.Text
+  category    String?
+  status      IdeaStatus @default(PENDING)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  userId String
+  user   User   @relation("ProposedIdeas", fields: [userId], references: [id])
+
+  streamerId String?
+  streamer   User?   @relation("StreamerRelation", fields: [streamerId], references: [id])
+
+  votes   IdeaVote[]
+  rewards Reward[]
+
+  @@map("ideas")
+}
+
+model IdeaVote {
   id        String   @id @default(cuid())
-  token     String   @unique
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expiresAt DateTime
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  value     Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  ideaId String
+  idea   Idea   @relation(fields: [ideaId], references: [id])
+
+  @@unique([ideaId, userId])
+  @@map("idea_votes")
 }
 
-model Hospital {
-  id      String  @id @default(cuid())
-  name    String
-  address String?
-  phone   String?
-
+model Reward {
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  points    Int?
 
-  departments   Department[]
-  staffs        Staff[]
-  announcements Announcement[]
-}
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-model Department {
-  id         String @id @default(cuid())
-  hospitalId String
-  name       String
+  ideaId String
+  idea   Idea   @relation(fields: [ideaId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  hospital     Hospital      @relation(fields: [hospitalId], references: [id])
-  queueTickets QueueTicket[]
-}
-
-model Staff {
-  id         String    @id @default(cuid())
-  userId     String    @unique
-  hospitalId String
-  role       StaffRole
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user     User     @relation(fields: [userId], references: [id])
-  hospital Hospital @relation(fields: [hospitalId], references: [id])
-}
-
-model QueueTicket {
-  id           String       @id @default(cuid())
-  userId       String
-  departmentId String
-  status       TicketStatus @default(WAITING)
-  priority     Boolean      @default(false)
-
-  ticketNumber Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
-
-  user       User       @relation(fields: [userId], references: [id])
-  department Department @relation(fields: [departmentId], references: [id])
-}
-
-model Announcement {
-  id         String  @id @default(cuid())
-  hospitalId String
-  title      String
-  content    String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  hospital Hospital @relation(fields: [hospitalId], references: [id])
-}
-
-model PushToken {
-  id       String  @id @default(cuid())
-  userId   String
-  token    String
-  platform String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  @@map("rewards")
 }
