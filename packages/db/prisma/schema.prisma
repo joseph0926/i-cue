@@ -7,47 +7,51 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
+/**
+ * UserRole
+ * - VIEWER: 일반 유저 / 가입하면 디폴트로 설정되는 역할
+ * - PROPOSER: 기획 제안이 가능한 유저 <- 여기부터 추가 인증 필요
+ * - ADMIN: 해당 서비스 관리자,매니저등
+ */
+enum UserRole {
   VIEWER
-  STREAMER
+  PROPOSER
   ADMIN
 }
 
-enum IdeaStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
-  ARCHIVED
-}
-
+/**
+ * User
+ * - 기본적으로 `매직링크 방식의 회원가입/로그인 기능 구현`
+ * - 다만 추가 인증시 휴대폰 인증 고려
+ */
 model User {
-  id            String    @id @default(cuid())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   name          String?
-  email         String?   @unique
+  email         String    @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
+  role          UserRole  @default(VIEWER)
 
-  role Role @default(VIEWER)
-
-  accounts Account[]
-  sessions Session[]
-
-  proposedIdeas Idea[] @relation("ProposedIdeas")
-
-  streamedIdeas Idea[] @relation("StreamerRelation")
-
-  votes   IdeaVote[]
-  rewards Reward[]
+  accounts    Account[]
+  sessions    Session[]
+  broadcaster Broadcaster?
 
   @@map("users")
 }
 
+/**
+ * Account
+ * - Auth.js - Prisma
+ */
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            String  @map("user_id")
   type              String
   provider          String
-  providerAccountId String
+  providerAccountId String  @map("provider_account_id")
   refresh_token     String? @db.Text
   access_token      String? @db.Text
   expires_at        Int?
@@ -62,17 +66,24 @@ model Account {
   @@map("accounts")
 }
 
+/**
+ * Session
+ * - Auth.js
+ */
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
 
+/**
+ * VerificationToken
+ * - Auth.js 이메일 인증 토큰
+ */
 model VerificationToken {
   identifier String
   token      String
@@ -82,52 +93,27 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-model Idea {
-  id          String     @id @default(cuid())
-  title       String
-  description String     @db.Text
-  category    String?
-  status      IdeaStatus @default(PENDING)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  userId String
-  user   User   @relation("ProposedIdeas", fields: [userId], references: [id])
-
-  streamerId String?
-  streamer   User?   @relation("StreamerRelation", fields: [streamerId], references: [id])
-
-  votes   IdeaVote[]
-  rewards Reward[]
-
-  @@map("ideas")
+/**
+ * BroadcasterRole
+ * - 방송인 역할
+ */
+enum BroadcasterRole {
+  YOUTUBER
+  SOOP
+  CHZZK
 }
 
-model IdeaVote {
+/**
+ * Broadcaster
+ * - 방송인으로 인증되면 생성되는 테이블
+ */
+model Broadcaster {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  value     Int
+  updatedAt DateTime @updatedAt
 
-  userId String
+  role BroadcasterRole
+
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id])
-
-  ideaId String
-  idea   Idea   @relation(fields: [ideaId], references: [id])
-
-  @@unique([ideaId, userId])
-  @@map("idea_votes")
-}
-
-model Reward {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  points    Int?
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  ideaId String
-  idea   Idea   @relation(fields: [ideaId], references: [id])
-
-  @@map("rewards")
 }
