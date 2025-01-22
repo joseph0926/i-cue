@@ -68,13 +68,13 @@ export function StepTwoVerification({
                 <FormLabel>인증코드</FormLabel>
                 <FormControl>
                   <InputOTP maxLength={6} {...field}>
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
+                    <InputOTPGroup className="w-full">
+                      <InputOTPSlot index={0} className="h-14 flex-1" />
+                      <InputOTPSlot index={1} className="h-14 flex-1" />
+                      <InputOTPSlot index={2} className="h-14 flex-1" />
+                      <InputOTPSlot index={3} className="h-14 flex-1" />
+                      <InputOTPSlot index={4} className="h-14 flex-1" />
+                      <InputOTPSlot index={5} className="h-14 flex-1" />
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>
@@ -96,7 +96,12 @@ export function StepTwoVerification({
       </Form>
 
       <div className="mt-4">
-        <Button variant="outline" onClick={onResendEmail} disabled={!userEmail}>
+        <Button
+          variant="outline"
+          className="border-primary"
+          onClick={onResendEmail}
+          disabled={!userEmail}
+        >
           인증 메일 다시 보내기
         </Button>
       </div>
