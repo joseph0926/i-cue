@@ -14,19 +14,28 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://icue-streaming.com'),
 
-  title: 'ICue Web - 병원 스마트 대기열 관리',
+  title: 'ICue Web - 방송 아이디어 매칭 플랫폼',
   description:
-    'ICue 병원 대기열 관리 웹 시스템. 병원 대기 시간을 효율적으로 관리하고, 환자에게 편리한 서비스를 제공합니다.',
+    '시청자가 직접 방송 아이디어를 제안하고, 스트리머가 채택하여 새롭고 재미있는 콘텐츠를 만드는 “방송 아이디어 매칭 플랫폼”입니다.',
 
   authors: [{ name: '김영훈', url: 'https://github.com/joseph0926' }],
   creator: '김영훈 (joseph0926)',
   publisher: 'ICue org',
 
-  keywords: ['ICue', '병원 대기열', '의료', 'Queue Management', 'Healthcare'],
+  keywords: [
+    'ICue',
+    '방송 아이디어',
+    '스트리머',
+    '시청자 참여',
+    '콘텐츠 기획',
+    '크라우드소싱',
+    '플랫폼',
+  ],
 
   openGraph: {
-    title: 'ICue Web',
-    description: '병원 대기열 관리의 효율을 높이고, 환자 만족도를 극대화하는 스마트 솔루션.',
+    title: 'ICue Web - 방송 아이디어 매칭 플랫폼',
+    description:
+      '시청자가 제안한 아이디어를 스트리머가 채택하여, 더 새롭고 재미있는 방송을 만드는 ICue 플랫폼입니다.',
     url: 'https://icue-streaming.com',
     siteName: 'ICue Web',
     locale: 'ko_KR',
@@ -36,19 +45,20 @@ export const metadata: Metadata = {
         url: 'https://icue-streaming.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'ICue Preview',
+        alt: 'ICue - 방송 아이디어 매칭 플랫폼 Preview',
       },
     ],
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'ICue Web',
-    description: '병원 대기열 관리의 효율을 높이고, 환자 만족도를 극대화하는 스마트 솔루션.',
+    title: 'ICue Web - 방송 아이디어 매칭 플랫폼',
+    description:
+      '시청자가 직접 방송 컨셉을 제안하고, 채택 시 보상을 받을 수 있는 크라우드소싱 기반 아이디어 플랫폼.',
     creator: '@김영훈',
   },
 
-  category: 'technology',
+  category: 'entertainment',
 
   icons: {
     icon: '/logo.svg',
