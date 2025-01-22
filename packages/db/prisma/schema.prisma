@@ -21,7 +21,7 @@ enum UserRole {
 
 /**
  * User
- * - 기본적으로 `매직링크 방식의 회원가입/로그인 기능 구현`
+ * - 기본적으로 `이메일+비밀번호/소셜로그인`
  * - 다만 추가 인증시 휴대폰 인증 고려
  */
 model User {
@@ -29,11 +29,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name          String?
-  email         String    @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  role          UserRole  @default(VIEWER)
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime? @map("email_verified")
+  image          String?
+  hashedPassword String?
+  role           UserRole  @default(VIEWER)
 
   accounts    Account[]
   sessions    Session[]
