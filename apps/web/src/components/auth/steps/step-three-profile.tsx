@@ -17,10 +17,10 @@ import { useDirtyCheck } from '@/hooks/use-dirty-check';
 
 type StepThreeProfileProps = {
   defaultValues: {
-    nickname: string;
+    name: string;
     avatarUrl: string;
   };
-  onSubmitSuccess: (avatarUrl: string, nickname: string) => void;
+  onSubmitSuccess: (avatarUrl: string, name: string) => void;
 };
 
 export function StepThreeProfile({ defaultValues, onSubmitSuccess }: StepThreeProfileProps) {
@@ -37,7 +37,7 @@ export function StepThreeProfile({ defaultValues, onSubmitSuccess }: StepThreePr
 
   const handleSubmit = async (values: ProfileValues) => {
     form.clearErrors('root');
-    onSubmitSuccess(values.avatarUrl || '', values.nickname);
+    onSubmitSuccess(values.avatarUrl || '', values.name);
   };
 
   return (
@@ -45,14 +45,18 @@ export function StepThreeProfile({ defaultValues, onSubmitSuccess }: StepThreePr
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
         <FormField
           control={form.control}
-          name="nickname"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>닉네임</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="활동 닉네임" className="placeholder:text-black/50" />
+                <Input
+                  {...field}
+                  placeholder="활동 닉네임"
+                  className="placeholder:text-black/50 placeholder:dark:text-white/50"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-rose-600 dark:text-rose-500" />
             </FormItem>
           )}
         />
@@ -66,11 +70,11 @@ export function StepThreeProfile({ defaultValues, onSubmitSuccess }: StepThreePr
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="https://example.com/my-avatar.png"
-                  className="placeholder:text-black/50"
+                  placeholder="https://github.com/shadcn.png"
+                  className="placeholder:text-black/50 placeholder:dark:text-white/50"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-rose-600 dark:text-rose-500" />
             </FormItem>
           )}
         />

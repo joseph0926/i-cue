@@ -9,12 +9,6 @@ export const signUpSchema = z.object({
     .min(5, '이메일은 5자 이상이어야 합니다.')
     .max(100, '이메일은 최대 100자까지 가능합니다.')
     .email('유효한 이메일 주소를 입력해주세요.'),
-  name: z
-    .string()
-    .trim()
-    .min(1, '이름은 1자 이상이어야 합니다.')
-    .max(12, '이름은 최대 12자까지 가능합니다.')
-    .regex(/^[가-힣a-zA-Z_\-]+$/, '이름에는 한글, 영문,  -, _ 문자만 사용할 수 있습니다.'),
   password: z
     .string()
     .min(8, '비밀번호는 8자 이상이어야 합니다.')
@@ -30,7 +24,7 @@ export const verifyCodeSchema = z.object({
 });
 
 export const profileSchema = z.object({
-  nickname: z
+  name: z
     .string()
     .min(1, '닉네임은 필수입니다.')
     .max(20, '닉네임은 최대 20자까지 가능합니다.')

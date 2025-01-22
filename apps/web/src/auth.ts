@@ -11,7 +11,7 @@ import { getUserByEmail } from './actions/user.action';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: 'database',
+    strategy: 'jwt',
   },
   debug: false,
   logger: {

@@ -22,11 +22,10 @@ import { useDirtyCheck } from '@/hooks/use-dirty-check';
 
 type StepOneFormProps = {
   defaultValues: {
-    name: string;
     email: string;
     password: string;
   };
-  onSubmitSuccess: (id: string, name: string, email: string) => void;
+  onSubmitSuccess: (id: string, email: string) => void;
 };
 
 export function StepOneForm({ defaultValues, onSubmitSuccess }: StepOneFormProps) {
@@ -60,7 +59,7 @@ export function StepOneForm({ defaultValues, onSubmitSuccess }: StepOneFormProps
           data.message || '기본 정보가 등록되었습니다. 이메일 인증 스텝으로 이동합니다.'
         );
 
-        onSubmitSuccess(data.user.id, data.user.name || '', data.user.email || '');
+        onSubmitSuccess(data.user.id, data.user.name || '');
       }
     } catch (err: unknown) {
       const errMsg = (err as { message: string })?.message ?? '알 수 없는 오류가 발생했습니다.';
@@ -81,28 +80,18 @@ export function StepOneForm({ defaultValues, onSubmitSuccess }: StepOneFormProps
 
         <FormField
           control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>이름</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="홍길동" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>이메일</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="user@example.com" />
+                <Input
+                  {...field}
+                  placeholder="user@example.com"
+                  className="placeholder:text-black/50 placeholder:dark:text-white/50"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-rose-600 dark:text-rose-500" />
             </FormItem>
           )}
         />
@@ -129,7 +118,7 @@ export function StepOneForm({ defaultValues, onSubmitSuccess }: StepOneFormProps
                   </button>
                 </div>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-rose-600 dark:text-rose-500" />
             </FormItem>
           )}
         />

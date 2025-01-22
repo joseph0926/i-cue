@@ -18,8 +18,7 @@ type SignUpResponse = {
     id: string;
     name: string | null;
     email: string | null;
-    nickname: string | null;
-    imageUrl: string | null;
+    image: string | null;
   };
   message: string;
 };
@@ -36,7 +35,7 @@ export async function signupAction(payload: SignUpValues): Promise<ApiResponse<S
       };
     }
 
-    const { email, name, password } = parsed.data;
+    const { email, password } = parsed.data;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
@@ -56,24 +55,23 @@ export async function signupAction(payload: SignUpValues): Promise<ApiResponse<S
       }
     }
 
-    const passwordHash = await saltAndHashPassword(password);
+    const hashedPassword = await saltAndHashPassword(password);
 
     const user = await prisma.user.create({
       data: {
         email,
-        name,
-        passwordHash,
+        hashedPassword,
       },
     });
 
     const verificationCode = generateVerificationCode();
-    const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
+    const expires = new Date(Date.now() + 1000 * 60 * 60);
 
-    await prisma.emailVerificationToken.create({
+    await prisma.verificationToken.create({
       data: {
         token: verificationCode,
-        userId: user.id,
-        expiresAt,
+        identifier: user.id,
+        expires,
       },
     });
 
@@ -95,8 +93,7 @@ export async function signupAction(payload: SignUpValues): Promise<ApiResponse<S
           id: user.id,
           name: user.name,
           email: user.email,
-          nickname: user.nickname,
-          imageUrl: user.image,
+          image: user.image,
         },
         message: '해당 정보로 회원가입이 정상 진행되었습니다. 이메일 인증 코드를 입력해주세요.',
       },
@@ -133,7 +130,7 @@ export async function createProfileAction(
       };
     }
 
-    const { nickname, avatarUrl } = parsed.data;
+    const { name, avatarUrl } = parsed.data;
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
@@ -149,7 +146,7 @@ export async function createProfileAction(
         id: user.id,
       },
       data: {
-        nickname,
+        name,
         image: avatarUrl,
       },
     });
@@ -161,8 +158,7 @@ export async function createProfileAction(
           id: updatedUser.id,
           name: updatedUser.name,
           email: updatedUser.email,
-          nickname: updatedUser.nickname,
-          imageUrl: updatedUser.image,
+          image: updatedUser.image,
         },
         message: '회원가입이 완료되었습니다. 이메일 인증 코드를 입력해주세요.',
       },

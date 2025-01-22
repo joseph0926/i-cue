@@ -46,11 +46,11 @@ export async function getUserByEmail(email: string, plainPassword: string): Prom
       where: { email },
     });
 
-    if (!user || !user.passwordHash) {
+    if (!user || !user.hashedPassword) {
       return null;
     }
 
-    const isMatch = await bcrypt.compare(plainPassword, user.passwordHash);
+    const isMatch = await bcrypt.compare(plainPassword, user.hashedPassword);
     if (!isMatch) {
       return null;
     }

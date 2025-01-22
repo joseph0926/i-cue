@@ -82,9 +82,13 @@ export default function SignInPage() {
               <FormItem>
                 <FormLabel>이메일</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="user@example.com" />
+                  <Input
+                    {...field}
+                    placeholder="user@example.com"
+                    className="placeholder:text-black/50 placeholder:dark:text-white/50"
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-rose-600 dark:text-rose-500" />
               </FormItem>
             )}
           />
@@ -111,7 +115,7 @@ export default function SignInPage() {
                     </button>
                   </div>
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-rose-600 dark:text-rose-500" />
               </FormItem>
             )}
           />
@@ -126,6 +130,16 @@ export default function SignInPage() {
           </Button>
         </form>
       </Form>
+
+      <div className="mt-6 text-center text-sm">
+        <span className="text-foreground/60">아직 계정이 없으신가요? </span>
+        <button
+          onClick={() => router.push('/sign-up')}
+          className="text-primary inline-flex items-center hover:underline"
+        >
+          회원가입
+        </button>
+      </div>
     </div>
   );
 }

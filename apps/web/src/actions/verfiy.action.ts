@@ -14,7 +14,7 @@ type ResendVerificationResponse = {
 };
 
 type VerifyEmailCodePayload = {
-  email: string;
+  userId: string;
   code: string;
 };
 
@@ -46,25 +46,22 @@ export async function resendVerificationAction(
     }
 
     const verificationCode = generateVerificationCode();
-    const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
+    const expires = new Date(Date.now() + 1000 * 60 * 60);
 
-    await prisma.emailVerificationToken.deleteMany({
-      where: { userId: user.id },
+    await prisma.verificationToken.deleteMany({
+      where: { identifier: user.id },
     });
-    await prisma.emailVerificationToken.create({
+    await prisma.verificationToken.create({
       data: {
         token: verificationCode,
-        userId: user.id,
-        expiresAt,
+        identifier: user.id,
+        expires,
       },
     });
 
     const provider = {
       apiKey: process.env.AUTH_RESEND_KEY ?? '',
-      from:
-        process.env.NODE_ENV === 'development'
-          ? 'onboarding@resend.dev'
-          : (process.env.EMAIL_FROM ?? ''),
+      from: process.env.EMAIL_FROM ?? '',
     };
 
     await sendVerificationRequest({
@@ -91,9 +88,9 @@ export async function verifyEmailCodeAction(
   payload: VerifyEmailCodePayload
 ): Promise<ApiResponse<VerifyEmailCodeResponse>> {
   try {
-    const { email, code } = payload;
+    const { userId, code } = payload;
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       return {
         success: false,
@@ -110,12 +107,11 @@ export async function verifyEmailCodeAction(
       };
     }
 
-    const verificationRecord = await prisma.emailVerificationToken.findFirst({
+    const verificationRecord = await prisma.verificationToken.findFirst({
       where: {
-        userId: user.id,
+        identifier: user.id,
         token: code,
       },
-      orderBy: { createdAt: 'desc' },
     });
 
     if (!verificationRecord) {
@@ -126,7 +122,7 @@ export async function verifyEmailCodeAction(
       };
     }
 
-    if (verificationRecord.expiresAt < new Date()) {
+    if (verificationRecord.expires < new Date()) {
       return {
         success: false,
         data: null,
@@ -139,7 +135,7 @@ export async function verifyEmailCodeAction(
       data: { emailVerified: new Date() },
     });
 
-    await prisma.emailVerificationToken.deleteMany({ where: { userId: user.id } });
+    await prisma.verificationToken.deleteMany({ where: { identifier: user.id } });
 
     return {
       success: true,

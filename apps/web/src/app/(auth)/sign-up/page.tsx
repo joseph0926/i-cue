@@ -20,7 +20,6 @@ export default function SignUpPage() {
     name: string;
     email: string;
     password: string;
-    nickname: string;
     avatarUrl: string;
     isEmailVerified: boolean;
   }>({
@@ -28,7 +27,6 @@ export default function SignUpPage() {
     name: '',
     email: '',
     password: '',
-    nickname: '',
     avatarUrl: '',
     isEmailVerified: false,
   });
@@ -49,11 +47,10 @@ export default function SignUpPage() {
     [router, searchParams]
   );
 
-  const handleStepOneSuccess = (id: string, name: string, email: string) => {
+  const handleStepOneSuccess = (id: string, email: string) => {
     setSignUpData((prev) => ({
       ...prev,
       id,
-      name,
       email,
     }));
 
@@ -63,7 +60,7 @@ export default function SignUpPage() {
   const handleVerifyCode = async (code: string) => {
     try {
       const { success, error } = await verifyEmailCodeAction({
-        email: signUpData.email,
+        userId: signUpData.id,
         code,
       });
 
@@ -96,16 +93,16 @@ export default function SignUpPage() {
     }
   };
 
-  const handleStepThreeSuccess = async (avatarUrl: string, nickname: string) => {
+  const handleStepThreeSuccess = async (avatarUrl: string, name: string) => {
     setSignUpData((prev) => ({
       ...prev,
-      nickname,
+      name,
       avatarUrl,
     }));
 
     try {
       const { data, success, error } = await createProfileAction(
-        { avatarUrl, nickname },
+        { avatarUrl, name },
         signUpData.id
       );
 
@@ -115,7 +112,7 @@ export default function SignUpPage() {
       }
 
       if (data) {
-        toast.success(`${data.user.nickname}님, 가입이 완료되었습니다!`);
+        toast.success(`${data.user.name}님, 가입이 완료되었습니다!`);
         router.push('/sign-in');
       }
     } catch (err: unknown) {
@@ -130,7 +127,6 @@ export default function SignUpPage() {
         return (
           <StepOneForm
             defaultValues={{
-              name: signUpData.name,
               email: signUpData.email,
               password: signUpData.password,
             }}
@@ -149,7 +145,7 @@ export default function SignUpPage() {
         return (
           <StepThreeProfile
             defaultValues={{
-              nickname: signUpData.nickname,
+              name: signUpData.name,
               avatarUrl: signUpData.avatarUrl,
             }}
             onSubmitSuccess={handleStepThreeSuccess}
@@ -196,7 +192,7 @@ export default function SignUpPage() {
       <div className="mt-6 text-center text-sm">
         <span className="text-foreground/60">이미 계정이 있으신가요? </span>
         <button
-          onClick={() => router.push('/auth/login')}
+          onClick={() => router.push('/sign-in')}
           className="text-primary inline-flex items-center hover:underline"
         >
           로그인

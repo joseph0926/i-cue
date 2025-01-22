@@ -78,7 +78,7 @@ export function StepTwoVerification({
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-rose-600 dark:text-rose-500" />
               </FormItem>
             )}
           />
