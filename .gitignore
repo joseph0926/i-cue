@@ -5,8 +5,11 @@ node_modules
 coverage
 
 # next.js
-.next/
-out/
+.next
+out
+
+# turbo
+.turbo
 
 # production
 build
