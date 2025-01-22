@@ -26,8 +26,6 @@
     },
     "lint": {},
     "lint:fix": {},
-    "format": {},
-    "db:gen:dev": {},
-    "db:studio": {}
+    "format": {}
   }
 }

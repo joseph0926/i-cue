@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "env-cmd -f ../../.env.development next dev --turbopack --port 3001",
     "build": "next build",
-    "start": "env-cmd -f ../../.env.production next start",
+    "build:dev": "env-cmd -f ../../.env.development next build",
+    "build:prod": "env-cmd -f ../../.env.production next build",
+    "start": "next start",
+    "start:dev": "env-cmd -f ../../.env.development next start",
+    "start:prod": "env-cmd -f ../../.env.production next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md,json,js,jsx}\"",

@@ -13,9 +13,7 @@
     "clean": "turbo run clean",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "format": "turbo run format",
-    "db:gen:dev": "turbo run db:gen:dev",
-    "db:studio": "turbo run db:studio"
+    "format": "turbo run format"
   },
   "keywords": [],
   "author": "joseph0926",
