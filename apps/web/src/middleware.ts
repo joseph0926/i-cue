@@ -1,10 +1,11 @@
 import { getToken } from 'next-auth/jwt';
 import { auth as middleware } from '@/auth';
+import { ROUTES } from './constants/routes';
 
 export default middleware(async (req) => {
   const { pathname, origin } = req.nextUrl;
 
-  if (pathname === '/') {
+  if (pathname === ROUTES.HOME) {
     return;
   }
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
@@ -12,15 +13,15 @@ export default middleware(async (req) => {
   const isSignedIn = !!token && !!token.jti;
 
   if (!isSignedIn) {
-    if (pathname !== '/sign-in' && pathname !== '/sign-up') {
-      const newUrl = new URL('/sign-in', origin);
+    if (pathname !== ROUTES.SIGNIN && pathname !== ROUTES.SIGNUP) {
+      const newUrl = new URL(ROUTES.SIGNIN, origin);
       return Response.redirect(newUrl);
     }
     return;
   }
 
-  if (pathname === '/sign-in' || pathname === '/sign-up') {
-    const newUrl = new URL('/', origin);
+  if (pathname === ROUTES.SIGNIN || pathname === ROUTES.SIGNUP) {
+    const newUrl = new URL(ROUTES.HOME, origin);
     return Response.redirect(newUrl);
   }
 

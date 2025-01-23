@@ -1,6 +1,6 @@
 import { signOut } from '@/auth';
 
-export default function LandingPage() {
+export default function HomePage() {
   return (
     <div>
       <form

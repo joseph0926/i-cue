@@ -19,6 +19,7 @@ import { signIn as nextAuthSignIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { ROUTES } from '@/constants/routes';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function SignInPage() {
       }
 
       toast.success('로그인에 성공했습니다.');
-      router.push('/');
+      router.push(ROUTES.HOME);
     } catch (error: unknown) {
       const errMsg = (error as { message?: string })?.message ?? '알 수 없는 오류가 발생했습니다.';
       form.setError('root', { message: errMsg });
@@ -134,7 +135,7 @@ export default function SignInPage() {
       <div className="mt-6 text-center text-sm">
         <span className="text-foreground/60">아직 계정이 없으신가요? </span>
         <button
-          onClick={() => router.push('/sign-up')}
+          onClick={() => router.push(ROUTES.SIGNUP)}
           className="text-primary inline-flex items-center hover:underline"
         >
           회원가입

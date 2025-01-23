@@ -10,6 +10,7 @@ import { StepIndicator } from '@/components/auth/step-indicator';
 import { StepOneForm } from '@/components/auth/steps/step-one-form';
 import { StepThreeProfile } from '@/components/auth/steps/step-three-profile';
 import { StepTwoVerification } from '@/components/auth/steps/step-two-verification';
+import { ROUTES } from '@/constants/routes';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function SignUpPage() {
     (step: number) => {
       const query = new URLSearchParams(Array.from(searchParams?.entries() || []));
       query.set('step', String(step));
-      router.push(`/sign-up?${query.toString()}`);
+      router.push(`${ROUTES.SIGNUP}?${query.toString()}`);
     },
     [router, searchParams]
   );
@@ -113,7 +114,7 @@ export default function SignUpPage() {
 
       if (data) {
         toast.success(`${data.user.name}님, 가입이 완료되었습니다!`);
-        router.push('/sign-in');
+        router.push(ROUTES.SIGNIN);
       }
     } catch (err: unknown) {
       const errMsg = (err as { message: string })?.message ?? '알 수 없는 오류가 발생했습니다.';
@@ -192,7 +193,7 @@ export default function SignUpPage() {
       <div className="mt-6 text-center text-sm">
         <span className="text-foreground/60">이미 계정이 있으신가요? </span>
         <button
-          onClick={() => router.push('/sign-in')}
+          onClick={() => router.push(ROUTES.SIGNIN)}
           className="text-primary inline-flex items-center hover:underline"
         >
           로그인
