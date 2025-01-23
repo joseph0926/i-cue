@@ -1,6 +1,7 @@
 import { LogoTextIcon } from '@icue/ui/src/components/icons';
 import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
+import { NavbarMenu } from './navbar-menu';
 
 export const Navbar = () => {
   return (
@@ -8,6 +9,8 @@ export const Navbar = () => {
       <Link href={ROUTES.HOME} className="relative h-20 w-40">
         <LogoTextIcon className="size-full" />
       </Link>
+      <NavbarMenu />
+      <div>test</div>
     </nav>
   );
 };
