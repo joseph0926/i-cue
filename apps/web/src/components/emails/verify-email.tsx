@@ -57,7 +57,7 @@ export function VerifyEmailCode({ code }: { code: string }) {
                               textAlign: 'center',
                             }}
                           >
-                            <span style={{ fontSize: '1rem', fontWeight: 'bold' }}>DQ</span>
+                            <span style={{ fontSize: '1rem', fontWeight: 'bold' }}>IQ</span>
                           </td>
 
                           <td style={{ paddingLeft: '12px' }}>
