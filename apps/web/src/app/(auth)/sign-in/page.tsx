@@ -51,7 +51,7 @@ export default function SignInPage() {
       }
 
       toast.success('로그인에 성공했습니다.');
-      router.push(ROUTES.HOME);
+      router.push(ROUTES.LANDING);
     } catch (error: unknown) {
       const errMsg = (error as { message?: string })?.message ?? '알 수 없는 오류가 발생했습니다.';
       form.setError('root', { message: errMsg });

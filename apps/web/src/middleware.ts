@@ -4,25 +4,27 @@ import { ROUTES } from './constants/routes';
 
 export default middleware(async (req) => {
   const { pathname, origin } = req.nextUrl;
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const isSignedIn = !!token && !!token.jti;
 
-  if (pathname === ROUTES.HOME) {
+  if (pathname === ROUTES.LANDING) {
+    if (isSignedIn) {
+      return Response.redirect(new URL(ROUTES.HOME, origin));
+    }
+
     return;
   }
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-
-  const isSignedIn = !!token && !!token.jti;
 
   if (!isSignedIn) {
     if (pathname !== ROUTES.SIGNIN && pathname !== ROUTES.SIGNUP) {
-      const newUrl = new URL(ROUTES.SIGNIN, origin);
-      return Response.redirect(newUrl);
+      return Response.redirect(new URL(ROUTES.SIGNIN, origin));
     }
+
     return;
   }
 
   if (pathname === ROUTES.SIGNIN || pathname === ROUTES.SIGNUP) {
-    const newUrl = new URL(ROUTES.HOME, origin);
-    return Response.redirect(newUrl);
+    return Response.redirect(new URL(ROUTES.HOME, origin));
   }
 
   return;

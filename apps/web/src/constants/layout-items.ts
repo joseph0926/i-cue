@@ -16,5 +16,5 @@ export const navbarItems: NavbarItemType[] = [
 
 export const navbarAuthItems: NavbarItemType[] = [
   { label: '프로필', href: ROUTES.MY, Icon: User2 },
-  { label: '로그아웃', href: ROUTES.HOME, Icon: LogOut },
+  { label: '로그아웃', href: ROUTES.LANDING, Icon: LogOut },
 ];

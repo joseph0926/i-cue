@@ -7,7 +7,7 @@ import { NavbarMenu } from './navbar-menu';
 export const Navbar = () => {
   return (
     <nav className="hidden w-full items-center justify-between p-2.5 px-10 md:flex">
-      <Link href={ROUTES.HOME} className="relative h-[4.75rem] w-40">
+      <Link href={ROUTES.LANDING} className="relative h-[4.75rem] w-40">
         <LogoTextIcon className="size-full" />
       </Link>
       <NavbarMenu />

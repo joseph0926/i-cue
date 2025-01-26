@@ -10,7 +10,7 @@ export const NavbarMobile = () => {
   return (
     <SessionProvider>
       <nav className="flex w-full items-center justify-between px-6 py-4 md:hidden">
-        <Link href={ROUTES.HOME} className="relative size-10">
+        <Link href={ROUTES.LANDING} className="relative size-10">
           <LogoIcon className="size-full" />
         </Link>
         <NavbarMobileSheet />

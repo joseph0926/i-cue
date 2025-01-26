@@ -31,7 +31,7 @@ export const NavbarMobileSheet = () => {
         <SheetHeader className="mb-4 flex items-center justify-between">
           <div>
             <SheetTitle className="flex items-center gap-2">
-              <Link href={ROUTES.HOME} onClick={() => setOpen(false)}>
+              <Link href={ROUTES.LANDING} onClick={() => setOpen(false)}>
                 <LogoTextIcon className="h-10" />
               </Link>
             </SheetTitle>
