@@ -2,6 +2,7 @@
 
 import { cn } from '@icue/ui/src/lib/utils';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { navbarItems } from '@/constants/layout-items';
 
@@ -12,6 +13,8 @@ type IndicatorStyle = {
 };
 
 export const NavbarMenu = () => {
+  const pathname = usePathname();
+
   const navContainerRef = useRef<HTMLUListElement>(null);
 
   const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>({
@@ -19,7 +22,7 @@ export const NavbarMenu = () => {
     top: 0,
     visible: false,
   });
-  const [activeItemHref, setActiveItemHref] = useState<string | null>(null);
+  const [hoveredItemHref, setHoveredItemHref] = useState<string | null>(null);
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLLIElement>, href: string) => {
     if (!navContainerRef.current) return;
@@ -36,7 +39,7 @@ export const NavbarMenu = () => {
     const left = liCenterX - navRect.left;
     const top = liCenterY - navRect.top;
 
-    setActiveItemHref(href);
+    setHoveredItemHref(href);
     setIndicatorStyle({
       left,
       top,
@@ -45,7 +48,7 @@ export const NavbarMenu = () => {
   };
 
   const handleMouseLeaveNav = () => {
-    setActiveItemHref(null);
+    setHoveredItemHref(null);
     setIndicatorStyle((prev) => ({
       ...prev,
       visible: false,
@@ -67,20 +70,26 @@ export const NavbarMenu = () => {
           top: indicatorStyle.top,
         }}
       />
-      {navbarItems.map((item) => (
-        <li onMouseEnter={(e) => handleMouseEnter(e, item.href)} key={item.href} className="z-10">
-          <Link
-            href={'#'}
-            className={cn(
-              'relative flex items-center gap-3',
-              activeItemHref === item.href ? 'text-primary' : 'text-foreground'
-            )}
-          >
-            <span className="text-sm font-semibold">{item.label}</span>
-            <item.Icon className="size-5" />
-          </Link>
-        </li>
-      ))}
+      {navbarItems.map((item) => {
+        const isActive = pathname.startsWith(item.href);
+        const isHovered = hoveredItemHref === item.href;
+
+        return (
+          <li onMouseEnter={(e) => handleMouseEnter(e, item.href)} key={item.href} className="z-10">
+            <Link
+              href={item.href}
+              aria-current={isActive ? 'page' : undefined}
+              className={cn(
+                'relative flex items-center gap-3 transition-colors',
+                isActive || isHovered ? 'text-primary' : 'text-foreground'
+              )}
+            >
+              <span className="text-sm font-semibold">{item.label}</span>
+              <item.Icon className="size-4" />
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 };
