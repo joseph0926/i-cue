@@ -1,27 +1,18 @@
 import './globals.css';
 import { cn } from '@icue/ui/src/lib/utils';
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+import { Noto_Sans_KR } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/providers/theme.provider';
 
-const pretendard = localFont({
-  src: './fonts/PretendardVariable.woff2',
-  display: 'swap',
-  weight: '45 920',
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://icue-streaming.com'),
-
   title: 'ICue Web - 방송 아이디어 매칭 플랫폼',
   description:
     '시청자가 직접 방송 아이디어를 제안하고, 스트리머가 채택하여 새롭고 재미있는 콘텐츠를 만드는 “방송 아이디어 매칭 플랫폼”입니다.',
-
   authors: [{ name: '김영훈', url: 'https://github.com/joseph0926' }],
   creator: '김영훈 (joseph0926)',
   publisher: 'ICue org',
-
   keywords: [
     'ICue',
     '방송 아이디어',
@@ -31,7 +22,6 @@ export const metadata: Metadata = {
     '크라우드소싱',
     '플랫폼',
   ],
-
   openGraph: {
     title: 'ICue Web - 방송 아이디어 매칭 플랫폼',
     description:
@@ -49,7 +39,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   twitter: {
     card: 'summary_large_image',
     title: 'ICue Web - 방송 아이디어 매칭 플랫폼',
@@ -57,22 +46,23 @@ export const metadata: Metadata = {
       '시청자가 직접 방송 컨셉을 제안하고, 채택 시 보상을 받을 수 있는 크라우드소싱 기반 아이디어 플랫폼.',
     creator: '@김영훈',
   },
-
   category: 'entertainment',
-
   icons: {
     icon: '/logo.svg',
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const notoSansKr = Noto_Sans_KR({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans-kr',
+});
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <body className={cn(pretendard.className, 'antialiased')}>
+    <html lang="ko" className={cn(notoSansKr.variable)} suppressHydrationWarning>
+      <body className={cn('antialiased')}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
